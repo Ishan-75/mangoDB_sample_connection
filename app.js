@@ -3,6 +3,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 dotenv.config()
 const app = express();
+app.use(express.json());
 
 const foodSchema = new mongoose.Schema({
     FoodTitle: String,
@@ -28,10 +29,10 @@ app.post('/food', async function (req, res) {
         const { FoodTitle, FoodCategory, Price } = req.body;
         await Food.create({
             FoodTitle, FoodCategory, Price
-        })
+        });
         res.status(201).json({ message: "New Food added" })
     } catch (error) {
-        res.status(400).json({ message: err })
+        res.status(400).json({ message: error.message })
     }
 
 }
